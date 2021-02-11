@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Agenes</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport">
+<!-- Bootstrap 3.3.7 -->
+<link rel="stylesheet"
+	th:href="@{bower_components/bootstrap/dist/css/bootstrap.min.css}" />
+<!-- Font Awesome -->
+<link rel="stylesheet"
+	th:href="@{bower_components/font-awesome/css/font-awesome.min.css}" />
+<!-- Ionicons -->
+<link rel="stylesheet"
+	th:href="@{bower_components/Ionicons/css/ionicons.min.css}" />
+<!-- Theme style -->
+<link rel="stylesheet" th:href="@{dist/css/AdminLTE.min.css}" />
+<!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+<link rel="stylesheet" th:href="@{dist/css/skins/_all-skins.min.css}" />
+
+<!-- Google Font -->
+<link rel="stylesheet"
+	th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic}" />
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+
+		<header class="main-header">
+			<!-- Logo -->
+			<a href="/" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
+				<span class="logo-mini"><b>V</b>R</span> <!-- logo for regular state and mobile devices -->
+				<span class="logo-lg"><b>Vehicules</b>Rental</span>
+			</a>
+			<!-- Header Navbar: style can be found in header.less -->
+			<nav class="navbar navbar-static-top">
+				<!-- Sidebar toggle button-->
+				<a href="#" class="sidebar-toggle" data-toggle="push-menu"
+					role="button"> <span class="sr-only">Toggle navigation</span>
+				</a>
+
+				<div class="navbar-custom-menu">
+					<ul class="nav navbar-nav">
+						<!-- User Account: style can be found in dropdown.less -->
+						<li class="dropdown user user-menu"><a href="#"
+							class="dropdown-toggle" data-toggle="dropdown"> <span
+								class="hidden-xs">Logout</span>
+						</a></li>
+					</ul>
+				</div>
+
+			</nav>
+		</header>
+		<!-- Left side column. contains the logo and sidebar -->
+		<aside class="main-sidebar">
+			<!-- sidebar: style can be found in sidebar.less -->
+			<section class="sidebar">
+				<!-- Sidebar user panel -->
+				<div class="user-panel">
+					<div class="pull-left image">
+						<img src="dist/img/admin.png" class="img-circle" alt="User Image">
+					</div>
+					<div class="pull-left info">
+						<p>Aouatef</p>
+						<!-- Status -->
+						<a href="#">Admin</a>
+					</div>
+				</div>
+
+				<!-- sidebar menu: : style can be found in sidebar.less -->
+				<ul class="sidebar-menu" data-widget="tree">
+					<li class="header">MAIN NAVIGATION</li>
+					<li><a href="/agences"><i class="fa fa-dashboard"></i> <span>Agences</span></a></li>
+					<li><a href="/clients"><i class="fa fa-user"></i> <span>Clients</span></a></li>
+					<li class="treeview"><a href="#"><i class="fa fa-book"></i>
+							<span>Contracts</span> <span class="pull-right-container">
+								<i class="fa fa-angle-left pull-right"></i>
+						</span> </a>
+						<ul class="treeview-menu">
+							<li><a href="/contrats">Manage Contracts</a></li>
+							<li><a href="#">Manage Contracts State</a></li>
+							<li><a href="#">Manage Location Mode</a></li>
+						</ul></li>
+					<li class="treeview"><a href="#"><i class="fa fa-car"></i>
+							<span>Vehicules</span> <span class="pull-right-container">
+								<i class="fa fa-angle-left pull-right"></i>
+						</span> </a>
+						<ul class="treeview-menu">
+							<li><a href="/vehicules">Manage Vehicules</a></li>
+							<li><a href="#">Manage Models</a></li>
+							<li><a href="/categories">Manage Categories</a></li>
+							<li><a href="#">Manage Types</a></li>
+						</ul></li>
+					<li class="treeview"><a href="#"><i class="fa fa-cog"></i>
+							<span>Others</span> <span class="pull-right-container"> <i
+								class="fa fa-angle-left pull-right"></i>
+						</span> </a>
+						<ul class="treeview-menu">
+							<li><a href="#">Countries</a></li>
+							<li><a href="#">Cities</a></li>
+						</ul></li>
+				</ul>
+			</section>
+			<!-- /.sidebar -->
+		</aside>
+
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1>Agenes</h1>
+			</section>
+			<!-- Main content -->
+			<section class="content">
+				<!-- Small boxes (Stat box) -->
+				<div class="row">
+					<div class="col-md-2 pull-right">
+						<a href="#" class="btn btn-block btn-primary btn-sm"
+							data-toggle="modal" data-target="#addModal" data-whatever="@mdo"><i
+							class="fa fa-plus"> Add Agence </i></a>
+					</div>
+				</div>
+				<br />
+				<!-- /.row -->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="box box-primary">
+							<div class="box-body">
+								<input type="hidden" name="pageUtilisateur"
+									value="supprimerCompte">
+								<table id="example1" class="table table-bordered table-striped">
+									<thead>
+										<tr>
+											<th scope="col">Agence Number</th>
+											<th scope="col">Name</th>
+											<th scope="col">Nbr of employees</th>
+											<th scope="col">Country Id</th>
+											<th scope="col">Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="agence : ${Agences}">
+											<td th:text="${agence.numAg}"></td>
+											<td th:text="${agence.nomAg}"></td>
+											<td th:text="${agence.nbrEmplyes}"></td>
+											<td th:text="${agence.numPays}"></td>
+											<td><a data-toggle="modal" data-target="#updateModal"
+												href="#" th:data-parameter1="${agence.numAg}"
+												th:data-parameter2="${agence.nomAg}"
+												th:data-parameter3="${agence.nbrEmplyes}"
+												th:data-parameter4="${agence.numPays}"
+												th:onclick="passValue(
+							                      this.getAttribute('data-parameter1'),
+							                      this.getAttribute('data-parameter2'),
+							                      this.getAttribute('data-parameter3'),
+							                      this.getAttribute('data-parameter4'))">Edit</a>
+												&nbsp;&nbsp;&nbsp; <a
+												th:href="@{'/agences/delete/' + ${agence.numAg}}">Delete</a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<!-- /.box-body -->
+						</div>
+					</div>
+					<!-- /.col -->
+				</div>
+			</section>
+			<!-- /.content -->
+		</div>
+
+
+		<!-- Add Modals -->
+		<div class="modal fade" id="addModal" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Add Agence</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form id="addForm" action="#" th:action="@{/agences/create}"
+							th:object="${agence}" method="post">
+							<div class="form-group">
+								<label class="col-form-label">Name:</label> <input type="text"
+									class="form-control" th:field="*{nomAg}" required="required"
+									placeHolder="Name">
+							</div>
+							<div class="form-group">
+								<label class="col-form-label">Nbremployes:</label> <input
+									type="number" min="0" class="form-control"
+									th:field="*{nbrEmplyes}" required="required">
+							</div>
+
+							<div class="form-group">
+								<label class="col-form-label">Select Country:</label> <select
+									class="form-control form-select form-select-lg mb-3"
+									th:field="*{numPays}" required="required">
+									<option th:each="i : ${pays}" th:value="${i.numPays}"
+										th:text="${i.nomPays}"></option>
+								</select>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">Cancel</button>
+								<button type="submit" class="btn btn-primary">Add</button>
+							</div>
+						</form>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<!-- End Add Modals -->
+
+		<!-- Start Edit modal -->
+		<div div class="modal fade" id="updateModal" tabindex="-1"
+			role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Edit Agance</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form id="updateForm" action="#" th:action="@{/agences/update/}"
+							th:object="${agence}" method="post">
+							
+							<div class="form-group">
+						   <label for="recipient-name" class="col-form-label">Agence Number:</label> 
+							<input type="text" class="form-control" id="numagence"
+									th:field="*{numAg}" readonly="readonly"> 
+							</div>	
+							<div class="form-group">
+							<label for="recipient-name" class="col-form-label">Name:</label> <input
+									type="text" class="form-control" id="nomagence"
+									th:field="*{nomAg}" required="required" placeHolder="Name">
+							</div>
+
+							<div class="form-group">
+								<label class="col-form-label">Nbremployes:</label> <input
+									type="number" min="0" class="form-control" id="nbremplagence"
+									th:field="*{nbrEmplyes}" required="required">
+							</div>
+
+							<div class="form-group">
+								<label class="col-form-label">Select Country:</label> <select
+									class="form-control form-select form-select-lg mb-3"
+									id="selectCountryEdit" th:field="*{numPays}"
+									required="required">
+									<option th:each="i : ${pays}" th:value="${i.numPays}"
+										th:text="${i.nomPays}"></option>
+								</select>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">Close</button>
+								<button type="submit" class="btn btn-primary">Edit</button>
+							</div>
+						</form>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<!-- End Edit modal -->
+
+
+	</div>
+	<!-- ./wrapper -->
+
+
+
+	<!-- jQuery 3 -->
+	<script src="bower_components/jquery/dist/jquery.min.js"></script>
+	<!-- jQuery UI 1.11.4 -->
+	<script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+	<script>  
+
+
+	function passValue(id, nomAgence , nbrEmpl, numPays) {
+	
+	//alert(id);
+	$(document).find('#updateModal .modal-body #numagence').val(id)
+	//alert(nomAgence);
+	$(document).find('#updateModal .modal-body #nomagence').val(nomAgence)
+	//alert(nbrEmpl);
+	$(document).find('#updateModal .modal-body #nbremplagence').val(nbrEmpl)
+	//alert(numPays);
+	document.getElementById('selectCountryEdit').value=numPays;
+	}
+	
+	        
+	</script>
+	<!-- Bootstrap 3.3.7 -->
+	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- Morris.js charts -->
+	<script src="bower_components/raphael/raphael.min.js"></script>
+	<script src="bower_components/morris.js/morris.min.js"></script>
+	<!-- Sparkline -->
+	<script
+		src="bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+	<!-- jvectormap -->
+	<script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+	<script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+	<!-- jQuery Knob Chart -->
+	<script src="bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
+	<!-- daterangepicker -->
+	<script src="bower_components/moment/min/moment.min.js"></script>
+	<script
+		src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+	<!-- datepicker -->
+	<script
+		src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+	<!-- Bootstrap WYSIHTML5 -->
+	<script
+		src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+	<!-- Slimscroll -->
+	<script
+		src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	<!-- FastClick -->
+	<script src="bower_components/fastclick/lib/fastclick.js"></script>
+	<!-- AdminLTE App -->
+	<script src="dist/js/adminlte.min.js"></script>
+	<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+	<script src="dist/js/pages/dashboard.js"></script>
+	<!-- AdminLTE for demo purposes -->
+	<script src="dist/js/demo.js"></script>
+</body>
+</html>

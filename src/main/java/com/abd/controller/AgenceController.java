@@ -1,56 +1,69 @@
 package com.abd.controller;
-
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.abd.entity.Agence;
+import com.abd.entity.Pays;
 import com.abd.exception.ResourceNotFoundException;
 import com.abd.repository.AgenceRepository;
+import com.abd.repository.PaysRepository;
 
-@RestController
-@RequestMapping(value = "/agences")
+
+
+@Controller
 public class AgenceController {
 	
     @Autowired
     private AgenceRepository agenceRepository;
+    @Autowired
+    private PaysRepository paysRepository;
     
 	//get all Agences
-    @GetMapping
-	public List<Agence> getAllAgences(){
-		return agenceRepository.findAll();
+    @RequestMapping(value = "/agences")
+	public String getAllAgences(Model model){
+        List<Agence> agences = agenceRepository.findAll();
+        model.addAttribute("Agences", agences);     
+        model.addAttribute("agence", new Agence());
+        model.addAttribute("unpays", new Pays());
+        model.addAttribute("pays", paysRepository.findAll());
+        return "agences";
 	}
     
 	// get Agence by id
-    @GetMapping(value = "/{numAg}")
+    @RequestMapping(value = "/agences/{numAg}")
 	public Agence getAgenceById(@PathVariable (value = "numAg") int numAg) {
 		return agenceRepository.findById(numAg)
 				.orElseThrow(()->new ResourceNotFoundException("Agence not found with num : " + numAg));
 	}
     
     // create Agence
-    @PostMapping
-	public Agence createAgence(@RequestBody Agence agence) {
-		return agenceRepository.save(agence);
+    @PostMapping(value = "/agences/create")
+	public String createAgence(@Valid @ModelAttribute("agence") Agence agence) { //,BindingResult bindingResult//if (!bindingResult.hasErrors()) {}
+		agenceRepository.save(agence);	
+	    return "redirect:/agences"; 	
 	}
 
 	// update Agence
-	@PutMapping(value = "/{numAg}")
-	public Agence updateAgence(@RequestBody Agence agence, @PathVariable ("numAg") int numAg) {
-		Agence existingAgence = agenceRepository.findById(numAg)
-			.orElseThrow(() -> new ResourceNotFoundException("Agence not found with id :" + numAg));
+    @PostMapping(value = "/agences/update")
+	public String updateAgence(@Valid @ModelAttribute("agence") Agence agence) {
+		Agence existingAgence = agenceRepository.findById(agence.getNumAg())
+			.orElseThrow(() -> new ResourceNotFoundException("Agence not found with id :" + agence.getNumAg()));
 		existingAgence.setNomAg(agence.getNomAg());
 		existingAgence.setNbrEmplyes(agence.getNbrEmplyes());
 		existingAgence.setNumPays(agence.getNumPays());
-		 return agenceRepository.save(existingAgence);
+		 agenceRepository.save(existingAgence);
+		 return "redirect:/agences";  
 	}
     
 	// delete Agence by id
-	@DeleteMapping(value = "/{numAg}")
-	public ResponseEntity<Agence> deleteAgence(@PathVariable ("numAg") int numAg){
+    @RequestMapping(value = "/agences/delete/{numAg}")
+	public String deleteAgence(@PathVariable ("numAg") int numAg){
 		Agence existingAgence = agenceRepository.findById(numAg)
 					.orElseThrow(() -> new ResourceNotFoundException("Agence not found with id :" + numAg));
 		agenceRepository.delete(existingAgence);
-		 return ResponseEntity.ok().build();
+	    return "redirect:/agences";  
 	}
 }

@@ -2,65 +2,81 @@ package com.abd.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.abd.entity.Client;
+import com.abd.entity.Ville;
 import com.abd.exception.ResourceNotFoundException;
 import com.abd.repository.ClientRepository;
-@RestController
-@RequestMapping(value = "/clients")
-public class ClientController {
-	 @Autowired
-	    private ClientRepository clientRepository;
-	    
-		//get all Clients
-	    @GetMapping
-		public List<Client> getAllClients(){
-			return clientRepository.findAll();
-		}
-	    
-		// get Client by id
-	    @GetMapping(value = "/{numCli}")
-		public Client getClientById(@PathVariable (value = "numCli") int numCli) {
-			return clientRepository.findById(numCli)
-					.orElseThrow(()->new ResourceNotFoundException("Client not found with num :" + numCli));
-		}
-	    
-	    // create Client
-	    @PostMapping
-		public Client createClient(@RequestBody Client client) {
-			return clientRepository.save(client);
-		}
+import com.abd.repository.VilleRepository;
 
-		// update Client
-		@PutMapping(value = "/{numCli}")
-		public Client updateClient(@RequestBody Client client, @PathVariable ("numCli") int numCli) {
-			Client existingClient = clientRepository.findById(numCli)
-				.orElseThrow(() -> new ResourceNotFoundException("Client not found with id :" + numCli));
-			existingClient.setNomCli(client.getNomCli());
-			existingClient.setPrenomCli(client.getPrenomCli());
-			existingClient.setNumPermis(client.getNumPermis());
-			existingClient.setAdresseCli(client.getAdresseCli());
-			existingClient.setTelCli(client.getTelCli());
-			existingClient.setVilleCli(client.getVilleCli());
-			 return clientRepository.save(existingClient);
-		}
-	    
-		// delete Client by id
-		@DeleteMapping(value = "/{numCli}")
-		public ResponseEntity<Client> deleteClient(@PathVariable ("numCli") int numCli){
-			Client existingClient = clientRepository.findById(numCli)
-						.orElseThrow(() -> new ResourceNotFoundException("Client not found with id :" + numCli));
-			clientRepository.delete(existingClient);
-			 return ResponseEntity.ok().build();
-		}
+
+@Controller
+public class ClientController {
+	
+	@Autowired
+	private ClientRepository clientRepository;
+    @Autowired
+    private VilleRepository villeRepository;
+   
+    
+	//get all Clients
+    @RequestMapping(value = "/clients")
+	public String getAllClients(Model model){
+        List<Client> clients = clientRepository.findAll();
+        model.addAttribute("Clients", clients);      
+        model.addAttribute("client", new Client());
+        model.addAttribute("uneville", new Ville());
+        model.addAttribute("villes", villeRepository.findAll());
+        return "clients";
+	}
+    
+	// get Client by id
+    @RequestMapping(value = "/clients/{numCli}")
+	public Client getClientById(@PathVariable (value = "numCli") int numCli) {
+		return clientRepository.findById(numCli)
+				.orElseThrow(()->new ResourceNotFoundException("Client not found with num :" + numCli));
+	}
+    
+    // create Client
+    @PostMapping(value = "/clients/create")
+	public String createClient(@Valid @ModelAttribute("client") Client client) { //,BindingResult bindingResult//if (!bindingResult.hasErrors()) {}
+    	clientRepository.save(client);	
+	    return "redirect:/clients"; 	
+	}
+   
+
+	// update Client
+    @PostMapping(value = "/clients/update")
+	public String updateClient(@Valid @ModelAttribute("client")  Client client) {
+		Client existingClient = clientRepository.findById(client.getNumCli())
+			.orElseThrow(() -> new ResourceNotFoundException("Client not found with id :" + client.getNumCli()));
+		existingClient.setNomCli(client.getNomCli());
+		existingClient.setPrenomCli(client.getPrenomCli());
+		existingClient.setNumPermis(client.getNumPermis());
+		existingClient.setAdresseCli(client.getAdresseCli());
+		existingClient.setTelCli(client.getTelCli());
+		existingClient.setVilleCli(client.getVilleCli());
+	    clientRepository.save(existingClient);
+		return "redirect:/clients"; 
+	}
+    
+    
+	// delete Client by id
+    @RequestMapping(value = "/clients/delete/{numCli}")
+	public String deleteClient(@PathVariable ("numCli") int numCli){
+		Client existingClient = clientRepository.findById(numCli)
+					.orElseThrow(() -> new ResourceNotFoundException("Client not found with id :" + numCli));
+		clientRepository.delete(existingClient);
+	    return "redirect:/clients";
+	}
 }
+

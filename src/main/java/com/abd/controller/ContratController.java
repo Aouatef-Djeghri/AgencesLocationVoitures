@@ -1,50 +1,66 @@
 package com.abd.controller;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.abd.entity.Contrat;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import com.abd.entity.*;
 import com.abd.exception.ResourceNotFoundException;
-import com.abd.repository.ContratRepository;
+import com.abd.repository.*;
 
-@RestController
-@RequestMapping(value = "/contrats")
+@Controller
 public class ContratController {
 
     @Autowired
     private ContratRepository contratRepository;
+    @Autowired
+    private ClientRepository cientRepository;
+    @Autowired
+    private VehiculeRepository vehiculeRepository; 
+    @Autowired
+    private ModeLocationRepository modeLocationRepository;
+    @Autowired
+    private EtatContratRepository etatContratRepository;
     
 	//get all Contrats
-    @GetMapping
-	public List<Contrat> getAllContrats(){
-		return contratRepository.findAll();
+    @RequestMapping(value = "/contrats")
+	public String getAllContrats(Model model){
+        List<Contrat> contrats = contratRepository.findAll();
+        model.addAttribute("Contrats", contrats);  
+        model.addAttribute("contrat", new Contrat());
+        model.addAttribute("clients", cientRepository.findAll());
+        model.addAttribute("vehicules", vehiculeRepository.findAll());
+        model.addAttribute("modesLocation", modeLocationRepository.findAll());
+        model.addAttribute("etatsContrat", etatContratRepository.findAll());
+        return "contrats";
 	}
     
 	// get Contrat by id
-    @GetMapping("/{numContrat}")
+    @RequestMapping("/contrats/{numContrat}")
 	public Contrat getContratById(@PathVariable (value = "numContrat") int numContrat) {
 		return contratRepository.findById(numContrat)
 				.orElseThrow(()->new ResourceNotFoundException("Contrat not found with num :" + numContrat));
 	}
     
     // create Contrat
-    @PostMapping
-	public Contrat createContrat(@RequestBody Contrat contrat) {
-		return contratRepository.save(contrat);
+    @PostMapping("/contrats/create")
+	public String createContrat(@Valid @ModelAttribute("contrat")  Contrat contrat){
+        //TODO check why itsn't working in html
+    	contrat.setEtatContrat(1);
+    	contratRepository.save(contrat);
+		return "redirect:/contrats"; 
 	}
 
 	// update Contrat
-	@PutMapping("/{numContrat}")
-	public Contrat updateContrat(@RequestBody Contrat contrat, @PathVariable ("numContrat") int numContrat) {
-		Contrat existingContrat = contratRepository.findById(numContrat)
-			.orElseThrow(() -> new ResourceNotFoundException("Contrat not found with id :" + numContrat));
+    @PostMapping("/contrats/update")
+	public String updateContrat(@Valid @ModelAttribute("contrat") Contrat contrat) {
+		Contrat existingContrat = contratRepository.findById(contrat.getNumContrat())
+			.orElseThrow(() -> new ResourceNotFoundException("Contrat not found with id :" + contrat.getNumContrat()));
 		existingContrat.setDatDContrat(contrat.getDatDContrat());
 		existingContrat.setDatFContrat(contrat.getDatFContrat());
 		existingContrat.setCaution(contrat.getCaution());
@@ -54,15 +70,16 @@ public class ContratController {
 		existingContrat.setNumClient(contrat.getNumClient());
 		existingContrat.setVehiculeImmatriculation(contrat.getVehiculeImmatriculation());
 		existingContrat.setModeLocation(contrat.getModeLocation());
-		return contratRepository.save(existingContrat);
+		contratRepository.save(existingContrat);
+		return "redirect:/contrats";  
 	}
     
 	// delete Contrat by id
-	@DeleteMapping("/{numContrat}")
-	public ResponseEntity<Contrat> deleteContrat(@PathVariable ("numContrat") int numContrat){
+    @RequestMapping("/contrats/delete/{numContrat}")
+	public String deleteContrat(@PathVariable ("numContrat") int numContrat){
 		Contrat existingContrat = contratRepository.findById(numContrat)
 					.orElseThrow(() -> new ResourceNotFoundException("Contrat not found with id :" + numContrat));
 		contratRepository.delete(existingContrat);
-		 return ResponseEntity.ok().build();
+		return "redirect:/contrats"; 
 	}
 }

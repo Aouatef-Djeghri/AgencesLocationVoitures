@@ -1,9 +1,10 @@
 package com.abd.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 @RequestMapping(value = "/tarifs")
 public class TarifsController {
 	// get all modeles

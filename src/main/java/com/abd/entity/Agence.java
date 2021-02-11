@@ -3,6 +3,8 @@ package com.abd.entity;
 import java.io.Serializable;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="AGENCE")
@@ -15,12 +17,15 @@ public class Agence implements Serializable {
 	@Column(name ="NUMAG")
 	private int numAg;
 	
+	@NotBlank(message="Agence name cannot be empty")
 	@Column(name ="NOMAG")
 	private String nomAg;
 	
+	@NotNull(message="Number of employees cannot be empty")
 	@Column(name ="NBREMPLOYES")
 	private int nbrEmplyes;
 	
+	@NotNull(message="Country cannot be empty")
 	@Column(name ="PAYSNUMPAY")
 	private int numPays;
 	
@@ -76,7 +81,6 @@ public class Agence implements Serializable {
 		this.numPays = numPays;
 	}
 	
-
 	@Override
 	public String toString() {
 		return "Agence [numAg=" + numAg + ", nomAg=" + nomAg + ", nbrEmplyes=" + nbrEmplyes + ", numPays=" + numPays

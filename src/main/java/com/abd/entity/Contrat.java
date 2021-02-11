@@ -5,6 +5,8 @@ import java.sql.Date;
 
 import javax.persistence.*;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name="CONTRAT")
 public class Contrat implements Serializable {
@@ -16,6 +18,7 @@ public class Contrat implements Serializable {
 	@Column(name ="NUMCONTR")
 	private int numContrat;
 	
+	//@DateTimeFormat(pattern = "MM/dd/yyyy")
 	@Column(name ="DATEDCONTR")
 	private Date datDContrat;
 	
