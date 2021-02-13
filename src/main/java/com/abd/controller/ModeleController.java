@@ -1,65 +1,60 @@
 package com.abd.controller;
-import java.util.List;
 
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import com.abd.entity.Modele;
 import com.abd.exception.ResourceNotFoundException;
 import com.abd.repository.ModeleRepository;
 
 
 @Controller
-@RequestMapping(value = "/modeles")
 public class ModeleController {
     @Autowired
     private ModeleRepository modeleRepository;
     
     
 	//get all Modeles
-    @GetMapping
-	public List<Modele> getAllModeles(){
-		return modeleRepository.findAll();
+    @RequestMapping(value = "/models")
+	public String getAllModeles(Model model){
+        model.addAttribute("Modeles", modeleRepository.findAll());     
+        model.addAttribute("modele", new Modele());
+		return "models";
 	}
     
 	// get Modele by id
-    @GetMapping(value = "/{numModel}")
+    @GetMapping(value = "/models/{numModel}")
 	public Modele getModeleById(@PathVariable (value = "numModel") int numModel) {
 		return modeleRepository.findById(numModel)
 				.orElseThrow(()->new ResourceNotFoundException("Modele not found with num :" + numModel));
 	}
     
     // create Modele
-    @PostMapping
-	public Modele createModele(@RequestBody Modele modele) {
-		return modeleRepository.save(modele);
+    @PostMapping(value = "/models/create")
+	public String createModele(@Valid @ModelAttribute("modele") Modele modele) {
+		 modeleRepository.save(modele);
+		 return "redirect:/models"; 
 	}
 
 	// update Modele
-	@PutMapping(value = "/{numModel}")
-	public Modele updateModele(@RequestBody Modele modele, @PathVariable ("numModel") int numModel) {
-		Modele existingModele = modeleRepository.findById(numModel)
-			.orElseThrow(() -> new ResourceNotFoundException("Modele not found with id :" + numModel));
+    @PostMapping(value = "/models/{numModel}")
+	public String updateModele(@Valid @ModelAttribute("modele") Modele modele) {
+		Modele existingModele = modeleRepository.findById(modele.getNumModel())
+			.orElseThrow(() -> new ResourceNotFoundException("Modele not found with id :" + modele.getNumModel()));
 		existingModele.setMarque(modele.getMarque());
-		return modeleRepository.save(existingModele);
+		modeleRepository.save(existingModele);
+		return "redirect:/models"; 
 	}
     
 	// delete Modele by id
-	@DeleteMapping(value = "/{numModel}")
-	public ResponseEntity<Modele> deleteModele(@PathVariable ("numModel") int numModel){
+	@RequestMapping(value = "/models/delete/{numModel}")
+	public String deleteModele(@PathVariable ("numModel") int numModel){
 		Modele existingModele = modeleRepository.findById(numModel)
 					.orElseThrow(() -> new ResourceNotFoundException("Modele not found with id :" + numModel));
 		modeleRepository.delete(existingModele);
-		 return ResponseEntity.ok().build();
+        return "redirect:/models"; 
 	}
     
 }

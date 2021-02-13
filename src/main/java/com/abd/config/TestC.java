@@ -4,10 +4,19 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+
 public class TestC {
 
-	
 
+    
+    public static void main(String[] args) {
+    	try {
+			getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	
 
@@ -27,13 +36,5 @@ public class TestC {
          }
         return connection;
     }
-    
-    public static void main(String[] args) {
-    	try {
-			getConnection();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+
 }

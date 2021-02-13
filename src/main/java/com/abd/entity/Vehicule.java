@@ -30,7 +30,7 @@ public class Vehicule implements Serializable {
 	private int numAgence;
 	
 	@Column(name = "NUMMOD")
-	private int numModeLocation;
+	private int numModele;
 	
 	@Column(name = "NUMTYPE")
 	private int numType;
@@ -43,25 +43,25 @@ public class Vehicule implements Serializable {
 		super();
 	}
 
-	public Vehicule(String couleur, int age, int numAgence, int numModeLocation, int numType,
+	public Vehicule(String couleur, int age, int numAgence, int numModele, int numType,
 			int numcat) {
 		super();
 		this.couleur = couleur;
 		this.age = age;
 		this.numAgence = numAgence;
-		this.numModeLocation = numModeLocation;
+		this.numModele = numModele;
 		this.numType = numType;
 		this.numcat = numcat;
 	}
 	
-	public Vehicule(int immatriculation, String couleur, int age, int numAgence, int numModeLocation, int numType,
+	public Vehicule(int immatriculation, String couleur, int age, int numAgence, int numModele, int numType,
 			int numcat) {
 		super();
 		this.immatriculation = immatriculation;
 		this.couleur = couleur;
 		this.age = age;
 		this.numAgence = numAgence;
-		this.numModeLocation = numModeLocation;
+		this.numModele = numModele;
 		this.numType = numType;
 		this.numcat = numcat;
 	}
@@ -98,12 +98,12 @@ public class Vehicule implements Serializable {
 		this.numAgence = numAgence;
 	}
 
-	public int getNumModeLocation() {
-		return numModeLocation;
+	public int getNumModele() {
+		return numModele;
 	}
 
-	public void setNumModeLocation(int numModeLocation) {
-		this.numModeLocation = numModeLocation;
+	public void setNumModele(int numModele) {
+		this.numModele = numModele;
 	}
 
 	public int getNumType() {
@@ -125,7 +125,7 @@ public class Vehicule implements Serializable {
 	@Override
 	public String toString() {
 		return "Vehicule [immatriculation=" + immatriculation + ", couleur=" + couleur + ", age=" + age + ", numAgence="
-				+ numAgence + ", numModeLocation=" + numModeLocation + ", numType=" + numType + ", numcat=" + numcat
+				+ numAgence + ", numModele=" + numModele + ", numType=" + numType + ", numcat=" + numcat
 				+ "]";
 	}
 

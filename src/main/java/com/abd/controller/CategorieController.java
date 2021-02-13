@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.abd.entity.Agence;
 import com.abd.entity.Categorie;
 import com.abd.exception.ResourceNotFoundException;
 import com.abd.repository.CategorieRepository;

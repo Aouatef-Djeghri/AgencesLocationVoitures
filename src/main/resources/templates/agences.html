@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Agenes</title>
+<title>Agencies</title>
 <!-- Tell the browser to be responsive to screen width -->
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -35,7 +35,7 @@
 			<!-- Logo -->
 			<a href="/" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
 				<span class="logo-mini"><b>V</b>R</span> <!-- logo for regular state and mobile devices -->
-				<span class="logo-lg"><b>Vehicules</b>Rental</span>
+				<span class="logo-lg"><b>Vehicles</b>Rental</span>
 			</a>
 			<!-- Header Navbar: style can be found in header.less -->
 			<nav class="navbar navbar-static-top">
@@ -73,36 +73,36 @@
 				</div>
 
 				<!-- sidebar menu: : style can be found in sidebar.less -->
-				<ul class="sidebar-menu" data-widget="tree">
+								<ul class="sidebar-menu" data-widget="tree">
 					<li class="header">MAIN NAVIGATION</li>
-					<li><a href="/agences"><i class="fa fa-dashboard"></i> <span>Agences</span></a></li>
+					<li><a href="/agences"><i class="fa fa-dashboard"></i> <span>Agencies</span></a></li>
 					<li><a href="/clients"><i class="fa fa-user"></i> <span>Clients</span></a></li>
 					<li class="treeview"><a href="#"><i class="fa fa-book"></i>
 							<span>Contracts</span> <span class="pull-right-container">
 								<i class="fa fa-angle-left pull-right"></i>
 						</span> </a>
 						<ul class="treeview-menu">
-							<li><a href="/contrats">Manage Contracts</a></li>
-							<li><a href="#">Manage Contracts State</a></li>
-							<li><a href="#">Manage Location Mode</a></li>
+					            <li><a href="/contrats">Manage Contracts</a></li>
+					            <li><a href="/etatscontrat">Manage Contract States</a></li>
+					            <li><a href="/modeslocation">Manage Rental Modes</a></li>
 						</ul></li>
 					<li class="treeview"><a href="#"><i class="fa fa-car"></i>
-							<span>Vehicules</span> <span class="pull-right-container">
+							<span>Vehicles</span> <span class="pull-right-container">
 								<i class="fa fa-angle-left pull-right"></i>
 						</span> </a>
 						<ul class="treeview-menu">
-							<li><a href="/vehicules">Manage Vehicules</a></li>
-							<li><a href="#">Manage Models</a></li>
+							<li><a href="/vehicules">Manage Vehicles</a></li>
+							<li><a href="/models">Manage Models</a></li>
 							<li><a href="/categories">Manage Categories</a></li>
-							<li><a href="#">Manage Types</a></li>
+							<li><a href="/types">Manage Types</a></li>
 						</ul></li>
 					<li class="treeview"><a href="#"><i class="fa fa-cog"></i>
 							<span>Others</span> <span class="pull-right-container"> <i
 								class="fa fa-angle-left pull-right"></i>
 						</span> </a>
 						<ul class="treeview-menu">
-							<li><a href="#">Countries</a></li>
-							<li><a href="#">Cities</a></li>
+							<li><a href="/pays">Countries</a></li>
+							<li><a href="/villes">Cities</a></li>
 						</ul></li>
 				</ul>
 			</section>
@@ -113,7 +113,7 @@
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
-				<h1>Agenes</h1>
+				<h1>Agency</h1>
 			</section>
 			<!-- Main content -->
 			<section class="content">
@@ -122,7 +122,7 @@
 					<div class="col-md-2 pull-right">
 						<a href="#" class="btn btn-block btn-primary btn-sm"
 							data-toggle="modal" data-target="#addModal" data-whatever="@mdo"><i
-							class="fa fa-plus"> Add Agence </i></a>
+							class="fa fa-plus"> Add Agency </i></a>
 					</div>
 				</div>
 				<br />
@@ -136,7 +136,7 @@
 								<table id="example1" class="table table-bordered table-striped">
 									<thead>
 										<tr>
-											<th scope="col">Agence Number</th>
+											<th scope="col">Agency Number</th>
 											<th scope="col">Name</th>
 											<th scope="col">Nbr of employees</th>
 											<th scope="col">Country Id</th>
@@ -182,7 +182,7 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Add Agence</h5>
+						<h5 class="modal-title" id="exampleModalLabel">Add Agency</h5>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
@@ -229,7 +229,7 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Edit Agance</h5>
+						<h5 class="modal-title" id="exampleModalLabel">Edit Agency</h5>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
@@ -240,7 +240,7 @@
 							th:object="${agence}" method="post">
 							
 							<div class="form-group">
-						   <label for="recipient-name" class="col-form-label">Agence Number:</label> 
+						   <label for="recipient-name" class="col-form-label">Agency Number:</label> 
 							<input type="text" class="form-control" id="numagence"
 									th:field="*{numAg}" readonly="readonly"> 
 							</div>	

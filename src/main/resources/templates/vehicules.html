@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Vehicules</title>
+<title>Vehicles</title>
 <!-- Tell the browser to be responsive to screen width -->
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -35,7 +35,7 @@
 			<!-- Logo -->
 			<a href="/" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
 				<span class="logo-mini"><b>V</b>R</span> <!-- logo for regular state and mobile devices -->
-				<span class="logo-lg"><b>Vehicules</b>Rental</span>
+				<span class="logo-lg"><b>Vehicles</b>Rental</span>
 			</a>
 			<!-- Header Navbar: style can be found in header.less -->
 			<nav class="navbar navbar-static-top">
@@ -75,34 +75,34 @@
 				<!-- sidebar menu: : style can be found in sidebar.less -->
 				<ul class="sidebar-menu" data-widget="tree">
 					<li class="header">MAIN NAVIGATION</li>
-					<li><a href="/agences"><i class="fa fa-dashboard"></i> <span>Agences</span></a></li>
+					<li><a href="/agences"><i class="fa fa-dashboard"></i> <span>Agencies</span></a></li>
 					<li><a href="/clients"><i class="fa fa-user"></i> <span>Clients</span></a></li>
 					<li class="treeview"><a href="#"><i class="fa fa-book"></i>
 							<span>Contracts</span> <span class="pull-right-container">
 								<i class="fa fa-angle-left pull-right"></i>
 						</span> </a>
 						<ul class="treeview-menu">
-							<li><a href="/contrats">Manage Contracts</a></li>
-							<li><a href="#">Manage Contracts State</a></li>
-							<li><a href="#">Manage Location Mode</a></li>
+					            <li><a href="/contrats">Manage Contracts</a></li>
+					            <li><a href="/etatscontrat">Manage Contract States</a></li>
+					            <li><a href="/modeslocation">Manage Rental Modes</a></li>
 						</ul></li>
 					<li class="treeview"><a href="#"><i class="fa fa-car"></i>
-							<span>Vehicules</span> <span class="pull-right-container">
+							<span>Vehicles</span> <span class="pull-right-container">
 								<i class="fa fa-angle-left pull-right"></i>
 						</span> </a>
 						<ul class="treeview-menu">
-							<li><a href="/vehicules">Manage Vehicules</a></li>
-							<li><a href="#">Manage Models</a></li>
+							<li><a href="/vehicules">Manage Vehicles</a></li>
+							<li><a href="/models">Manage Models</a></li>
 							<li><a href="/categories">Manage Categories</a></li>
-							<li><a href="#">Manage Types</a></li>
+							<li><a href="/types">Manage Types</a></li>
 						</ul></li>
 					<li class="treeview"><a href="#"><i class="fa fa-cog"></i>
 							<span>Others</span> <span class="pull-right-container"> <i
 								class="fa fa-angle-left pull-right"></i>
 						</span> </a>
 						<ul class="treeview-menu">
-							<li><a href="#">Countries</a></li>
-							<li><a href="#">Cities</a></li>
+							<li><a href="/pays">Countries</a></li>
+							<li><a href="/villes">Cities</a></li>
 						</ul></li>
 				</ul>
 			</section>
@@ -122,7 +122,7 @@
 					<div class="col-md-2 pull-right">
 						<a href="#" class="btn btn-block btn-primary btn-sm"
 							data-toggle="modal" data-target="#addModal" data-whatever="@mdo"><i
-							class="fa fa-plus"> Add Agence </i></a>
+							class="fa fa-plus"> Add Vehicle </i></a>
 					</div>
 				</div>
 				<br />
@@ -136,31 +136,44 @@
 								<table id="example1" class="table table-bordered table-striped">
 									<thead>
 										<tr>
-											<th scope="col">Agence Number</th>
-											<th scope="col">Name</th>
-											<th scope="col">Nbr of employees</th>
-											<th scope="col">Country Id</th>
+											<th scope="col">Immatriculation</th>
+											<th scope="col">Color</th>
+											<th scope="col">Age</th>
+											<th scope="col">Agency</th>
+											<th scope="col">Model</th>
+											<th scope="col">Type</th>
+											<th scope="col">Category</th>
 											<th scope="col">Actions</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:each="agence : ${Agences}">
-											<td th:text="${agence.numAg}"></td>
-											<td th:text="${agence.nomAg}"></td>
-											<td th:text="${agence.nbrEmplyes}"></td>
-											<td th:text="${agence.numPays}"></td>
+										<tr th:each="vehicule : ${Vehicules}">
+											<td th:text="${vehicule.immatriculation}"></td>
+											<td th:text="${vehicule.couleur}"></td>
+											<td th:text="${vehicule.age}"></td>
+											<td th:text="${vehicule.numAgence}"></td>
+											<td th:text="${vehicule.numModele}"></td>
+											<td th:text="${vehicule.numType}"></td>
+											<td th:text="${vehicule.numcat}"></td>
 											<td><a data-toggle="modal" data-target="#updateModal"
-												href="#" th:data-parameter1="${agence.numAg}"
-												th:data-parameter2="${agence.nomAg}"
-												th:data-parameter3="${agence.nbrEmplyes}"
-												th:data-parameter4="${agence.numPays}"
+												href="#" 
+												th:data-parameter1="${vehicule.immatriculation}"
+												th:data-parameter2="${vehicule.couleur}"
+												th:data-parameter3="${vehicule.age}"
+												th:data-parameter4="${vehicule.numAgence}"
+												th:data-parameter5="${vehicule.numModele}"
+												th:data-parameter6="${vehicule.numType}"
+												th:data-parameter7="${vehicule.numcat}"
 												th:onclick="passValue(
 							                      this.getAttribute('data-parameter1'),
 							                      this.getAttribute('data-parameter2'),
 							                      this.getAttribute('data-parameter3'),
-							                      this.getAttribute('data-parameter4'))">Edit</a>
+							                      this.getAttribute('data-parameter4'),
+							                      this.getAttribute('data-parameter5'),
+							                      this.getAttribute('data-parameter6'),
+							                      this.getAttribute('data-parameter7'))">Edit</a>
 												&nbsp;&nbsp;&nbsp; <a
-												th:href="@{'/agences/delete/' + ${agence.numAg}}">Delete</a>
+												th:href="@{'/vehicules/delete/' + ${vehicule.immatriculation}}">Delete</a>
 											</td>
 										</tr>
 									</tbody>
@@ -182,34 +195,69 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Add Vehicule</h5>
+						<h5 class="modal-title" id="exampleModalLabel">Add Vehicle</h5>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
 					<div class="modal-body">
-						<form id="addForm" action="#" th:action="@{/agences/create}"
-							th:object="${agence}" method="post">
+						<form id="addForm" action="#" th:action="@{/vehicules/create}"
+							th:object="${vehicule}" method="post">
+<!-- 							
+<div class="form-group">
+		\<label class="col-form-label">Immatriculation:</label> <input type="text"
+			\class="form-control" th:field="*{immatriculation}" required="required"
+			\placeHolder="immatriculation">
+\</div> 
+\-->
 							<div class="form-group">
-								<label class="col-form-label">Name:</label> <input type="text"
-									class="form-control" th:field="*{nomAg}" required="required"
-									placeHolder="Name">
+								<label class="col-form-label">Color:</label> <input type="text"
+									class="form-control" th:field="*{couleur}" required="required"
+									placeHolder="couleur">
 							</div>
 							<div class="form-group">
-								<label class="col-form-label">Nbremployes:</label> <input
+								<label class="col-form-label">Age:</label> <input
 									type="number" min="0" class="form-control"
-									th:field="*{nbrEmplyes}" required="required">
+									th:field="*{age}" required="required">
 							</div>
 
 							<div class="form-group">
-								<label class="col-form-label">Select Country:</label> <select
+								<label class="col-form-label">Select Agency:</label> <select
 									class="form-control form-select form-select-lg mb-3"
-									th:field="*{numPays}" required="required">
-									<option th:each="i : ${pays}" th:value="${i.numPays}"
-										th:text="${i.nomPays}"></option>
+									th:field="*{numAgence}" required="required">
+									<option th:each="i : ${agences}" th:value="${i.numAg}"
+										th:text="${i.nomAg}"></option>
 								</select>
 							</div>
+							
+							<div class="form-group">
+								<label class="col-form-label">Select Model:</label> <select
+									class="form-control form-select form-select-lg mb-3"
+									th:field="*{numModele}" required="required">
+									<option th:each="i : ${models}" th:value="${i.numModel}"
+										th:text="${i.marque}"></option>
+								</select>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-form-label">Select Category:</label> <select
+									class="form-control form-select form-select-lg mb-3"
+									th:field="*{numcat}" required="required">
+									<option th:each="i : ${categories}" th:value="${i.numCat}"
+										th:text="${i.libCat}"></option>
+								</select>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-form-label">Select Type:</label> <select
+									class="form-control form-select form-select-lg mb-3"
+									th:field="*{numType}" required="required">
+									<option th:each="i : ${types}" th:value="${i.numType}"
+										th:text="${i.libType}"></option>
+								</select>
+							</div>
+							
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary"
 									data-dismiss="modal">Cancel</button>
@@ -229,42 +277,74 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Edit Vehicule</h5>
+						<h5 class="modal-title" id="exampleModalLabel">Edit Vehicle</h5>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
 					<div class="modal-body">
-						<form id="updateForm" action="#" th:action="@{/agences/update/}"
-							th:object="${agence}" method="post">
+						<form id="updateForm" action="#" th:action="@{/vehicules/update/}"
+							th:object="${vehicule}" method="post">
 							
 							<div class="form-group">
-						   <label for="recipient-name" class="col-form-label">Agence Number:</label> 
-							<input type="text" class="form-control" id="numagence"
-									th:field="*{numAg}" readonly="readonly"> 
-							</div>	
+								<label class="col-form-label">Immatriculation:</label> <input type="text"
+									id="immatriculation" class="form-control" th:field="*{immatriculation}" required="required"
+									placeHolder="immatriculation" readOnly>
+							</div>
 							<div class="form-group">
-							<label for="recipient-name" class="col-form-label">Name:</label> <input
-									type="text" class="form-control" id="nomagence"
-									th:field="*{nomAg}" required="required" placeHolder="Name">
+								<label class="col-form-label">Color:</label> <input type="text"
+								id="couleur"
+									class="form-control" th:field="*{couleur}" required="required"
+									placeHolder="couleur">
+							</div>
+							<div class="form-group">
+								<label class="col-form-label">Age:</label> <input
+								id="age"
+									type="number" min="0" class="form-control"
+									th:field="*{age}" required="required">
 							</div>
 
 							<div class="form-group">
-								<label class="col-form-label">Nbremployes:</label> <input
-									type="number" min="0" class="form-control" id="nbremplagence"
-									th:field="*{nbrEmplyes}" required="required">
-							</div>
-
-							<div class="form-group">
-								<label class="col-form-label">Select Country:</label> <select
+								<label class="col-form-label">Select Agency:</label> <select
+								    id="selectAgenceEdit"
 									class="form-control form-select form-select-lg mb-3"
-									id="selectCountryEdit" th:field="*{numPays}"
-									required="required">
-									<option th:each="i : ${pays}" th:value="${i.numPays}"
-										th:text="${i.nomPays}"></option>
+									th:field="*{numAgence}" required="required">
+									<option th:each="i : ${agences}" th:value="${i.numAg}"
+										th:text="${i.nomAg}"></option>
 								</select>
 							</div>
+							
+							<div class="form-group">
+								<label class="col-form-label">Select Model:</label> <select
+								id="selectModeleEdit"
+									class="form-control form-select form-select-lg mb-3"
+									th:field="*{numModele}" required="required">
+									<option th:each="i : ${models}" th:value="${i.numModel}"
+										th:text="${i.marque}"></option>
+								</select>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-form-label">Select Category:</label> <select
+								id="selectCatEdit"
+									class="form-control form-select form-select-lg mb-3"
+									th:field="*{numcat}" required="required">
+									<option th:each="i : ${categories}" th:value="${i.numCat}"
+										th:text="${i.libCat}"></option>
+								</select>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-form-label">Select Type:</label> <select
+								id="selectTypeEdit"
+									class="form-control form-select form-select-lg mb-3"
+									th:field="*{numType}" required="required">
+									<option th:each="i : ${types}" th:value="${i.numType}"
+										th:text="${i.libType}"></option>
+								</select>
+							</div>
+							
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary"
 									data-dismiss="modal">Close</button>
@@ -292,16 +372,16 @@
 	<script>  
 
 
-	function passValue(id, nomAgence , nbrEmpl, numPays) {
+	function passValue(immatriculation,couleur,age,numAgence,numModele,numType
+	,numcat) {
 	
-	//alert(id);
-	$(document).find('#updateModal .modal-body #numagence').val(id)
-	//alert(nomAgence);
-	$(document).find('#updateModal .modal-body #nomagence').val(nomAgence)
-	//alert(nbrEmpl);
-	$(document).find('#updateModal .modal-body #nbremplagence').val(nbrEmpl)
-	//alert(numPays);
-	document.getElementById('selectCountryEdit').value=numPays;
+	$(document).find('#updateModal .modal-body #immatriculation').val(immatriculation)
+	$(document).find('#updateModal .modal-body #couleur').val(couleur)
+	$(document).find('#updateModal .modal-body #age').val(age)
+	document.getElementById('selectAgenceEdit').value=numAgence;
+	document.getElementById('selectModeleEdit').value=numModele;
+	document.getElementById('selectTypeEdit').value=numType;
+	document.getElementById('selectCatEdit').value=numcat;
 	}
 	
 	        

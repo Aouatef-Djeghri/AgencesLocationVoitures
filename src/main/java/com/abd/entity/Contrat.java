@@ -2,10 +2,8 @@ package com.abd.entity;
 
 import java.io.Serializable;
 import java.sql.Date;
-
 import javax.persistence.*;
 
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="CONTRAT")

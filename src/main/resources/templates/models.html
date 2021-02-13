@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Vehicule Rental Management Systeme</title>
+<title>Vehicule Models</title>
 <!-- Tell the browser to be responsive to screen width -->
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -27,7 +27,6 @@
 <!-- Google Font -->
 <link rel="stylesheet"
 	th:href="@{https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic}" />
-
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
@@ -83,9 +82,9 @@
 								<i class="fa fa-angle-left pull-right"></i>
 						</span> </a>
 						<ul class="treeview-menu">
-							<li><a href="/contrats">Manage Contracts</a></li>
-							<li><a href="/etatscontrat">Manage Contract States</a></li>
-							<li><a href="/modeslocation">Manage Rental Modes</a></li>
+					            <li><a href="/contrats">Manage Contracts</a></li>
+					            <li><a href="/etatscontrat">Manage Contract States</a></li>
+					            <li><a href="/modeslocation">Manage Rental Modes</a></li>
 						</ul></li>
 					<li class="treeview"><a href="#"><i class="fa fa-car"></i>
 							<span>Vehicles</span> <span class="pull-right-container">
@@ -114,165 +113,158 @@
 		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
-				<h1>
-					Dashboard <small>Control panel</small>
-				</h1>
+				<h1>Model</h1>
 			</section>
-
 			<!-- Main content -->
 			<section class="content">
 				<!-- Small boxes (Stat box) -->
 				<div class="row">
-					<div class="col-lg-3 col-xs-6">
-						<!-- small box -->
-						<div class="small-box bg-aqua">
-							<div class="inner">
-								<h3 th:text="${AgencesCount}"></h3>
-
-								<p>Agencies</p>
-							</div>
-							<div class="icon">
-								<i class="fa fa-dashboard"></i>
-							</div>
-							<a href="/agences" class="small-box-footer">More info <i
-								class="fa fa-arrow-circle-right"></i></a>
-						</div>
+					<div class="col-md-2 pull-right">
+						<a href="#" class="btn btn-block btn-primary btn-sm"
+							data-toggle="modal" data-target="#addModal" data-whatever="@mdo"><i
+							class="fa fa-plus"> Add Model </i></a>
 					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-						<!-- small box -->
-						<div class="small-box bg-green">
-							<div class="inner">
-								<h3 th:text="${VehiculesCount}">
-									<sup style="font-size: 20px">%</sup>
-								</h3>
-
-								<p>Vehicles</p>
-							</div>
-							<div class="icon">
-								<i class="fa fa-car"></i>
-							</div>
-							<a href="/vehicules" class="small-box-footer">More info <i
-								class="fa fa-arrow-circle-right"></i></a>
-						</div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-						<!-- small box -->
-						<div class="small-box bg-yellow">
-							<div class="inner">
-								<h3 th:text="${ClientsCount}"></h3>
-
-								<p>Clients</p>
-							</div>
-							<div class="icon">
-								<i class="fa fa-user"></i>
-							</div>
-							<a href="/clients" class="small-box-footer">More info <i
-								class="fa fa-arrow-circle-right"></i></a>
-						</div>
-					</div>
-					<!-- ./col -->
-					<div class="col-lg-3 col-xs-6">
-						<!-- small box -->
-						<div class="small-box bg-red">
-							<div class="inner">
-								<h3 th:text="${ContratsCount}"></h3>
-
-								<p>Contracts</p>
-							</div>
-							<div class="icon">
-								<i class="fa fa-book"></i>
-							</div>
-							<a href="/contrats" class="small-box-footer">More info <i
-								class="fa fa-arrow-circle-right"></i></a>
-						</div>
-					</div>
-					<!-- ./col -->
 				</div>
+				<br />
 				<!-- /.row -->
-
+				<div class="row">
+					<div class="col-md-12">
+						<div class="box box-primary">
+							<div class="box-body">
+								<input type="hidden" name="pageUtilisateur"
+									value="supprimerCompte">
+								<table id="example1" class="table table-bordered table-striped">
+									<thead>
+										<tr>
+											<th scope="col">Model Number</th>
+											<th scope="col">Brand</th>
+											<th scope="col">Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="modele : ${Modeles}">
+											<td th:text="${modele.numModel}"></td>
+											<td th:text="${modele.marque}"></td>
+											<td><a data-toggle="modal" data-target="#updateModal"
+												href="#" 
+												th:data-parameter1="${modele.numModel}"
+												th:data-parameter2="${modele.marque}"
+												th:onclick="passValue(
+							                      this.getAttribute('data-parameter1'),
+							                      this.getAttribute('data-parameter2'))">Edit</a>
+												&nbsp;&nbsp;&nbsp; <a
+												th:href="@{'/models/delete/' + ${modele.numModel}}">Delete</a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<!-- /.box-body -->
+						</div>
+					</div>
+					<!-- /.col -->
+				</div>
 			</section>
 			<!-- /.content -->
-			
-				<section class="content-header">
-					<h1>Quick Operations</h1>
-				</section>
-				<br/>
-				<section class="content">
-					<div class="row">
-						<div class="col-lg-6 col-xs-6">
-							<form action="#" th:action="@{/libEtatContrat}" method="post">
-								<div class="form-group">
-									<label class="col-form-label">Calculate number of contracts which contract status
-									is:</label> <select
-										name="libEtatContrat"
-										class="form-control form-select form-select-lg mb-3"
-										required="required">
-										<option th:each="i : ${EtatsContrat}"
-											th:value="${i.libEtatContart}" th:text="${i.libEtatContart}"></option>
-									</select>
-								</div>
-								<button type="submit" class="btn btn-primary">Calculate</button>
-							</form>
-						</div>
-						
-						<div class="col-lg-6 col-xs-6">
-							<form action="#" th:action="@{/libCategorie}" method="post">
-
-								<div class="form-group">
-									<label class="col-form-label">Calculate number of vehicle which category is:</label> <select
-										name="libCategorie"
-										class="form-control form-select form-select-lg mb-3"
-										required="required">
-										<option th:each="i : ${Categories}"
-											th:value="${i.libCat}" th:text="${i.libCat}"></option>
-									</select>
-								</div>
-								<button type="submit" class="btn btn-primary">Calculate</button>
-							</form>
-						</div>
-					</div>
-					<br/>
-					<br/>
-				    <div class="row">
-						<div class="col-lg-6 col-xs-6">
-							<div th:switch="${NbrContrat}">
-							    <div th:case="'0'">
-							        <p><span><b>No contracts having this label</b></span></p>
-							    </div>
-							    <div th:case="*">
-							        <p><b><span th:text="${NbrContrat}"></span>  Contract(s) with label : <span th:text="${EtatContratLabel}"></span></b></p>
-							    </div>
-							</div>	
-						</div>
-						
-						<div class="col-lg-6 col-xs-6">
-							<div th:switch="${NbrVehicule}">
-							    <div th:case="'0'">
-							        <p><span><b>No vehicle of this category</b></span></p>
-							    </div>
-							    <div th:case="*">
-							        <p><b><span th:text="${NbrVehicule}"></span>  Vehicle(s) of category : <span th:text="${CategorieLabel}"></span></b></p>
-							    </div>
-							</div>	
-						</div>
-					</div>
-					
-				</section>
 		</div>
 
-		<div class="content-wrapper">
 
-	    </div>
+		<!-- Add Modals -->
+		<div class="modal fade" id="addModal" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Add Model</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form id="addForm" action="#" th:action="@{/models/create}"
+							th:object="${modele}" method="post">
+							<div class="form-group">
+								<label class="col-form-label">Brand:</label> <input
+									type="text" class="form-control"
+									th:field="*{marque}" required="required">
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">Cancel</button>
+								<button type="submit" class="btn btn-primary">Add</button>
+							</div>
+						</form>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<!-- End Add Modals -->
+
+		<!-- Start Edit modal -->
+		<div div class="modal fade" id="updateModal" tabindex="-1"
+			role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Edit Agance</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form id="updateForm" action="#" th:action="@{/models/update/}"
+							th:object="${modele}" method="post">
+							
+							
+							<div class="form-group">
+								<label class="col-form-label">Model Number:</label> <input type="text"
+									class="form-control" th:field="*{numModel}" id="numModel" required="required"
+									placeHolder="Name" readOnly>
+							</div>
+							<div class="form-group">
+								<label class="col-form-label">Brand:</label> <input
+							     	id="marque" 
+									type="text" class="form-control"
+									th:field="*{marque}" required="required">
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">Close</button>
+								<button type="submit" class="btn btn-primary">Edit</button>
+							</div>
+						</form>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<!-- End Edit modal -->
+
 
 	</div>
 	<!-- ./wrapper -->
+
+
 
 	<!-- jQuery 3 -->
 	<script src="bower_components/jquery/dist/jquery.min.js"></script>
 	<!-- jQuery UI 1.11.4 -->
 	<script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+	<script>  
+
+
+	function passValue(numModel,marque) {
+	
+	$(document).find('#updateModal .modal-body #numModel').val(numModel)
+	$(document).find('#updateModal .modal-body #marque').val(marque)
+	}
+	
+	        
+	</script>
 	<!-- Bootstrap 3.3.7 -->
 	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 	<!-- Morris.js charts -->
