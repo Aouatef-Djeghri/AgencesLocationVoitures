@@ -212,11 +212,14 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Add Contract</h5>
-						<button type="button" class="close" data-dismiss="modal"
+					<div class="row">
+						<h5 class="modal-title col-md-11 pull-left" id="exampleModalLabel">Add Contract</h5>
+						<button type="button" class="close col-md-1 pull-right" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
+					</div>
+
 					</div>
 					<div class="modal-body">
 						<form id="addForm" action="#" th:action="@{/contrats/create}"
@@ -305,11 +308,14 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<span class="modal-title" id="exampleModalLabel">Edit Agance</span>
-						<button type="button" class="close" data-dismiss="modal"
+					<div class="row">
+						<span class="modal-title col-md-11 pull-left" id="exampleModalLabel">Edit Contract</span>
+						<button type="button" class="close col-md-1 pull-right" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
-						</button>
+						</button>	
+					</div>
+
 					</div>
 					<div class="modal-body">
 						<form id="updateForm" action="#" th:action="@{/contrats/update/}"

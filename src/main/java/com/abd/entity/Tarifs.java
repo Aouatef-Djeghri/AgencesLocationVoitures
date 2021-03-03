@@ -34,12 +34,12 @@ public class Tarifs implements Serializable {
 		super();
 	}
 
-	public Tarifs(int numCategorie, int coutBase, int kmFrofait) {
-		super();
-		this.numCategorie = numCategorie;
-		this.coutBase = coutBase;
-		this.kmFrofait = kmFrofait;
-	}
+//	public Tarifs(int numCategorie, int coutBase, int kmFrofait) {
+//		super();
+//		this.numCategorie = numCategorie;
+//		this.coutBase = coutBase;
+//		this.kmFrofait = kmFrofait;
+//	}
 	
 	public Tarifs(String modeLocation, int numCategorie, int coutBase, int kmFrofait) {
 		super();
